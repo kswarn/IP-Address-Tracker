@@ -31,6 +31,8 @@ export class CurrentLocation extends React.Component {
     if (prevState.currentLocation !== this.state.currentLocation) {
       this.recenterMap();
     }
+    if (prevState.latlong != this.state.latlong) {
+    }
   }
   recenterMap() {
     const map = this.map;

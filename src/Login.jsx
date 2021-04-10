@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Sawo from "sawo";
 import styles from "./styles";
 
-function Login({ setuserID }) {
+function Login() {
   // state values
   const [userPayload, setUserPayload] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -11,11 +11,8 @@ function Login({ setuserID }) {
     const onSuccessLogin = async (payload) => {
       setUserPayload(payload);
       setIsLoggedIn(true);
-      setuserID(payload.user_id);
       sessionStorage.setItem("user_id", payload.user_id);
-      console.log("Payload", payload);
     };
-    // console.log(userPayload);
     // Sawo Configuration, required to render form in the container
     // onSuccess callback will get invoke, after successful login
 
@@ -47,11 +44,11 @@ function Login({ setuserID }) {
           {/* Showing Successful login message */}
           {isLoggedIn && (
             <React.Fragment>
-              <div style={styles.loggedin}>
+              {/* <div style={styles.loggedin}>
                 <h2>User Successful login</h2>
                 <div>UserId: {userPayload.user_id}</div>
                 <div>Verification Token: {userPayload.verification_token}</div>
-              </div>
+              </div> */}
               {(window.location.href = "http://localhost:3000/home")}
             </React.Fragment>
           )}

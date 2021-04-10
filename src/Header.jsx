@@ -30,8 +30,6 @@ export default function Header({ setlatLong }) {
         },
       })
       .then((res) => {
-        // lat = res.location.lat;
-        // lng = res.location.lng;
         setlatLong({ lat: res.data.location.lat, lng: res.data.location.lng });
         let result = {
           userid: sessionStorage.getItem("user_id"),
