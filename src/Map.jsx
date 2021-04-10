@@ -44,8 +44,16 @@ export class CurrentLocation extends React.Component {
     }
   }
   componentDidMount() {
-    if (this.props.centerAroundCurrentLocation) {
-      if (navigator && navigator.geolocation) {
+    console.log("LATLONG", this.props.latlong);
+    this.props.latlong.lat
+      ? this.setState({
+          currentLocation: {
+            lat: this.props.latlong.lat,
+            lng: this.props.latlong.lng,
+          },
+        })
+      : navigator &&
+        navigator.geolocation &&
         navigator.geolocation.getCurrentPosition((pos) => {
           const coords = pos.coords;
           this.setState({
@@ -55,8 +63,6 @@ export class CurrentLocation extends React.Component {
             },
           });
         });
-      }
-    }
     this.loadMap();
   }
   loadMap() {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Sawo from "sawo";
-import Home from "./Home";
 import styles from "./styles";
 
 function Login({ setuserID }) {
@@ -11,9 +10,12 @@ function Login({ setuserID }) {
   useEffect(() => {
     const onSuccessLogin = async (payload) => {
       setUserPayload(payload);
-      setuserID(payload.user_id);
       setIsLoggedIn(true);
+      setuserID(payload.user_id);
+      sessionStorage.setItem("user_id", payload.user_id);
+      console.log("Payload", payload);
     };
+    // console.log(userPayload);
     // Sawo Configuration, required to render form in the container
     // onSuccess callback will get invoke, after successful login
 

@@ -8,9 +8,19 @@ import {
 } from "./config";
 import { ReactComponent as IconArrow } from "./css/icon-arrow.svg";
 
-export default function Header({ userID }) {
+export default function Header({ setlatLong }) {
   const [ipAddressInput, setipAddressInput] = useState("");
   const [keyInfo, setkeyInfo] = useState({});
+  const postDataToDb = (result) => {
+    axios
+      .post(POST_IP_DATA_URL, result)
+      .then((res) => {
+        console.log("Data send");
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  };
   const ipSearchHandler = () => {
     axios
       .get(IPIFY_GET_REQUEST_URL, {
@@ -20,8 +30,11 @@ export default function Header({ userID }) {
         },
       })
       .then((res) => {
+        // lat = res.location.lat;
+        // lng = res.location.lng;
+        setlatLong({ lat: res.data.location.lat, lng: res.data.location.lng });
         let result = {
-          userid: userID,
+          userid: sessionStorage.getItem("user_id"),
           ipAddress: ipAddressInput,
           location: res.data.location.city,
           timezone: res.data.location.timezone,
@@ -29,10 +42,7 @@ export default function Header({ userID }) {
         };
         console.log("RESPONSE", result);
         setkeyInfo(result);
-        axios
-          .post(POST_IP_DATA_URL, result)
-          .then((res) => console.log("Data send"))
-          .catch((err) => console.log(err.data));
+        postDataToDb(result);
       })
       .catch((error) => {
         console.log("ERROR: ", error);
